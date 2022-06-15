@@ -2,7 +2,7 @@
 
 @section('content-main')
 <div class="container-fluid py-4">
-    <div class="card shadow-lg mx-4 card-profile-bottom">
+    <div class="card shadow-lg mx-4">
         <div class="card-body p-3">
             <div class="row gx-4">
                 <div class="col-auto">
@@ -92,6 +92,19 @@
                                 </div>
                             </div>
                         </div>
+                        <hr class="horizontal dark">
+                        <p class="text-uppercase text-sm">Berkas Surat Pengantar Dari UPZ</p>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="{{ asset('storage/'.$user->sr_upz) }}" target="_blank">
+                                    <span class="badge bg-success">1. Download File Berkas Surat Pengantar Dari UPZ.pdf</span>
+                                </a><br><br>
+                            </div>
+                        </div>
+                        @if ($user->sr_upz)
+                            <iframe src="{{ asset('storage/'.$user->sr_upz) }}" width="600px" height="400px"></iframe>
+                        @endif
+
                         <hr class="horizontal dark">
                         <p class="text-uppercase text-sm">Contact Information</p>
                         <div class="row">

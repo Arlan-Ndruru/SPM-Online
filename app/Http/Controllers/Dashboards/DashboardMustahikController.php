@@ -20,9 +20,9 @@ class DashboardMustahikController extends Controller
     public function index()
     {
         if (Auth::user()->hasRole(['Staf-Distribusi'])) {
-            $mustahik = Mustahik::orderBy('updated_at', 'DESC')->where('ket', 's')
-            ->orWhere('ket', 'v')
-            ->orWhere('ket', 't');
+            $mustahik = Mustahik::orderBy('updated_at', 'DESC')->where('ket', 3)
+            ->orWhere('ket', 2)
+            ->orWhere('ket', 4);
             
         }else {
             $mustahik = Mustahik::orderBy('updated_at', 'DESC');
@@ -68,9 +68,10 @@ class DashboardMustahikController extends Controller
             'tl' => 'required',
             'masjid' => 'required',
             'no_hpM' => 'required',
-            'surat_pengantar' => 'required',
-            'f_ktp' => 'required',
-            'f_kk' => 'required',
+            'surat_pengantar' => 'required|mimes:pdf|max:2048',
+            'f_ktp' => 'required|mimes:pdf|max:2048',
+            'f_kk' => 'required|mimes:pdf|max:2048',
+            'f_foto' => 'required|image|mimes:png,jpg,jpeg|file|max:2048',
             'ket' => 'required',
         ]);
 
@@ -79,15 +80,19 @@ class DashboardMustahikController extends Controller
         // dd($validatedData);
 
         if ($request->file('surat_pengantar')) {
-            $validatedData['surat_pengantar'] = $request->file('surat_pengantar')->store('surat_pengantar');
+            $validatedData['surat_pengantar'] = $request->file('surat_pengantar')->store('bysistem/surat_pengantar');
+        }
+
+        if ($request->file('f_foto')) {
+            $validatedData['f_foto'] = $request->file('f_foto')->store('bysistem/Files_FOTO');
         }
 
         if ($request->file('f_ktp')) {
-            $validatedData['f_ktp'] = $request->file('f_ktp')->store('Files_KTP');
+            $validatedData['f_ktp'] = $request->file('f_ktp')->store('bysistem/Files_KTP');
         }
 
         if ($request->file('f_kk')) {
-            $validatedData['f_kk'] = $request->file('f_kk')->store('Files_KK');
+            $validatedData['f_kk'] = $request->file('f_kk')->store('bysistem/Files_KK');
         }
 
         Mustahik::create($validatedData);
@@ -157,19 +162,27 @@ class DashboardMustahikController extends Controller
             if ($request->surat_pengantarOld) {
                 Storage::delete($request->surat_pengantarOld);
             }
-            $validatedData['surat_pengantar'] = $request->file('surat_pengantar')->store('surat_pengantar');
+            $validatedData['surat_pengantar'] = $request->file('surat_pengantar')->store('bysistem/surat_pengantar');
         }
+
+        if ($request->file('f_foto')) {
+            if ($request->f_fotoOld) {
+                Storage::delete($request->f_fotoOld);
+            }
+            $validatedData['f_foto'] = $request->file('f_foto')->store('bysistem/Files_FOTO');
+        }
+
         if ($request->file('f_ktp')) {
             if ($request->f_ktpOld) {
                 Storage::delete($request->f_ktpOld);
             }
-            $validatedData['f_ktp'] = $request->file('f_ktp')->store('Files_ktp');
+            $validatedData['f_ktp'] = $request->file('f_ktp')->store('bysistem/Files_ktp');
         }
         if ($request->file('f_kk')) {
             if ($request->f_kkOld) {
                 Storage::delete($request->f_kkOld);
             }
-            $validatedData['f_kk'] = $request->file('f_kk')->store('Files_kk');
+            $validatedData['f_kk'] = $request->file('f_kk')->store('bysistem/Files_kk');
         }
 
         Mustahik::where('id', $mustahik->id)
@@ -185,6 +198,18 @@ class DashboardMustahikController extends Controller
      */
     public function destroy(Mustahik $mustahik)
     {
+        if ($mustahik->f_foto) {
+            Storage::delete($mustahik->f_foto);
+        }
+        if ($mustahik->f_ktp) {
+            Storage::delete($mustahik->f_ktp);
+        }
+        if ($mustahik->f_kk) {
+            Storage::delete($mustahik->f_kk);
+        }
+        if ($mustahik->surat_pengantar) {
+            Storage::delete($mustahik->surat_pengantar);
+        }
         Mustahik::destroy($mustahik->id);
         return redirect('dashboard/mustahiks')->with('success', "Data Mustahik, $mustahik->name has successfully been deleted.");
     }

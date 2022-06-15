@@ -91,6 +91,23 @@
                                     </div>
                                     @enderror
                                 </div>
+                                <div class="form-group w-75">
+                                    <label for="" class="form-label">Berkas Surat Rekomendasi UPZ</label>
+                                    <input type="text" name="sr_upzOld" hidden value="{{ $user->sr_upz }}">
+                                    <input type="file" name="sr_upz"
+                                        class="form-control is-valid @error('sr_upz') is-invalid @enderror" id="file-open"
+                                        onchange="previewFile()">
+                                
+                                    <div class="valid-feedback">
+                                        *Berkas sesuai yang format
+                                        dan kosongkan jika tidak ingin mengubah
+                                    </div>
+                                    @error('sr_upz')
+                                    <div class="invalid-feedback">
+                                        {{$message}}
+                                    </div>
+                                    @enderror
+                                </div>
                                 <div class="text-center">
                                     <button type="submit" class="text-white btn btn-lg bg-dark btn-lg w-75 mt-4 mb-0">Edit Account</button>
                                 </div>
@@ -98,8 +115,29 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-xl-7">
+                    <div class="card-body d-flex justify-content-center">
+                        <iframe src="{{ asset('storage/'.$user->sr_upz) }}" id="iframe-pdf" width="1200px" height="800px"></iframe>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
+<script>
+    function previewFile() {
+        const preview = document.querySelector('iframe');
+        const file = document.querySelector('input[type=file]').files[0];
+        const reader = new FileReader();
+        var filename = file.name;
+        
+        reader.addEventListener("load", function () {
+        // convert file to base64 string
+        preview.src = reader.result;
+        }, false);
+        
+        if (file) {
+        reader.readAsDataURL(file);
+        }
+    }
+</script>
 @endsection

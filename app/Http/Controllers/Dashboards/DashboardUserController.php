@@ -26,7 +26,6 @@ class DashboardUserController extends Controller
         $userSR = User::whereRoleis(['Staf-Resepsionis'])->latest();
         $userCM = User::whereRoleis(['Calon-Mustahik'])->latest();
         if (Auth::user()->hasRole(['Admin', 'Ketua'])) {
-
             $params = [
                 'users' => $user->filter(request(['search', 'searchDate']))->paginate(5),
 
@@ -38,14 +37,20 @@ class DashboardUserController extends Controller
                 // 'users' => User::latest()->paginate(2),
                 'title' => "Kelola Pengguna",
             ]; 
-
-
-
+        }
+        elseif (Auth::user()->hasRole(['Staf-Resepsionis'])) {
+            
+            $params = [
+                'users' => $user->filter(request(['search', 'searchDate']))->paginate(5),
+                'usersCM' => $userCM->filter(request(['search', 'searchDate']))->paginate(1),
+                // 'users' => User::latest()->paginate(2),
+                'title' => "Kelola Pengguna",
+            ]; 
         }
         else
         {
         $params = [
-            'users' => $user->filter(request(['search', 'searchDate']))->paginate(5),
+            // 'users' => $user->filter(request(['search', 'searchDate']))->paginate(5),
             // 'users' => User::latest()->paginate(2),
             'title' => "Kelola Pengguna",
         ];
@@ -78,15 +83,20 @@ class DashboardUserController extends Controller
         // dd($request);
 
         $validatedData = $request->validate([
-            'unique_number' => 'required|unique:users',
+            'unique_number' => 'required|unique:users|digits:16',
             'name' => 'required',
             'email' => 'required|unique:users',
-            'password' => 'required',
+            // 'password' => Hash::make($request->password),
             'no_hp' => 'required',
+            'sr_upz' => 'required|mimes:pdf,docx,doc|max:2048',
         
             // 'foto' => 'image|file|max:2048',
         ]);
-
+        // dd($validatedData);
+        if ($request->file('sr_upz')) {
+            $validatedData['sr_upz'] = $request->file('sr_upz')->store('SR-UPZ/sr_upz');
+        }
+        $validatedData['password'] = Hash::make($request->password);
         $validatedData['status'] = 1;
 
         // if ($request->file('foto')) {
@@ -147,6 +157,7 @@ class DashboardUserController extends Controller
             'name' => 'required',
             'no_hp' => 'required',
             'status' => 'required',
+            // 'sr_upz' => 'mimes:pdf|max:2048'
             // 'foto' => 'image|file|max:2048',
         ];
         if ($request->unique_number != $user->unique_number) {
@@ -155,11 +166,12 @@ class DashboardUserController extends Controller
         if ($request->email != $user->email) {
             $rules['email'] = 'required|unique:users';
         }
+        
+        // dd($validatedData);
+        $validatedData = $request->validate($rules);
         if ($request->password != null) {
             $validatedData['password'] = Hash::make($request->password);
         }
-
-        $validatedData = $request->validate($rules);
         // dd($validatedData);
         // if ($request->file('foto')) {
         //     if ($request->oldFoto) {
@@ -167,6 +179,12 @@ class DashboardUserController extends Controller
         //     }
         //     $validatedData['foto'] = $request->file('foto')->store('user-images');
         // }
+        if ($request->file('sr_upz')) {
+            if ($request->sr_upzOld) {
+                Storage::delete($request->sr_upzOld);
+            }
+            $validatedData['sr_upz'] = $request->file('sr_upz')->store('SR-UPZ/sr_upz');
+        }
 
         $role = Role::find($request->input('role_id'));
 
@@ -190,9 +208,9 @@ class DashboardUserController extends Controller
      */
     public function destroy(User $user)
     {
-        // if ($user->foto) {
-        //     Storage::delete($user->foto);
-        // }
+        if ($user->sr_upz) {
+            Storage::delete($user->sr_upz);
+        }
         User::destroy($user->id);
         return redirect('dashboard/users')->with('success', "User $user->name has successfully been deleted.");
     }

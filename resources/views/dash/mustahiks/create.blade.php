@@ -17,7 +17,12 @@
                             @csrf
                             <div class="form-group w-75">
                                 <label class="form-label">NIK : </label>
+                                <div class="text-dark text-sm ">
+                                    <i>Note : Berdasarkan Data KTP</i>
+                                </div>
                                 <input type="text" id="unique_number" name="unique_number" class="form-control @error('unique_number') is-invalid @enderror" required
+                                maxlength="16"
+                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                     value="{{old('unique_number')}}">
                                 @error('unique_number')
                                 <div class="invalid-feedback">
@@ -82,7 +87,7 @@
                                 <select name="masjid" class="form-select" id="masjid">
                                     <option hidden> Pilih Masjid </option>
                                     @foreach ($mosque as $row)
-                                    <option value="{{ $row->id }}">{{ $row->name }}</option>
+                                    <option value="{{ old('masjid', $row->id) }}">{{ $row->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -97,56 +102,74 @@
                                 </div>
                                 @enderror
                             </div>
-                            <div class="form-group w-75">
-                                <label for="" class="form-label">Berkas Pengantar</label>
-                                <input type="file" name="surat_pengantar" class="form-control is-valid @error('surat_pengantar') is-invalid @enderror" id="file-open"
-                                onchange="previewFile()">
-
+                            <hr class="horizontal dark">
+                            <div class="form-group position-relative">
+                                <label for="" class="form-label">Berkas Blanko</label>
+                                <input type="file" name="surat_pengantar"
+                                    class="form-control is-valid @error('surat_pengantar') is-invalid @enderror" id="file-open"
+                                    onchange="previewFile()">
+                            
                                 <div class="valid-feedback">
-                                    *Berkas sesuai yang format
+                                    *Berkas blanko dari baznas dan telah diisi berupa file PDF [max:2mb]
                                 </div>
                                 @error('surat_pengantar')
-                                <div class="invalid-feedback">
+                                <div class="invalid-tooltip">
                                     {{$message}}
                                 </div>
                                 @enderror
                             </div>
-                            <div class="form-group w-75">
+                            <div class="form-group w-75 position-relative">
+                                <br>
                                 <label for="" class="form-label">Kartu Tanda Penduduk (KTP)</label>
                                 <input type="file" name="f_ktp" class="form-control is-valid @error('f_ktp') is-invalid @enderror" id="file-open"
-                                onchange="previewFile()">
-
+                                    onchange="previewFile()">
+                            
                                 <div class="valid-feedback">
-                                    *Scan KTP asli
+                                    *Scan KTP asli berupa file PDF [max:2mb]
                                 </div>
                                 @error('f_ktp')
-                                <div class="invalid-feedback">
+                                <div class="invalid-tooltip">
                                     {{$message}}
                                 </div>
                                 @enderror
                             </div>
-                            <div class="form-group w-75">
+                            <div class="form-group w-75 position-relative">
+                                <br>
                                 <label for="" class="form-label">Kartu Keluarga (KK)</label>
                                 <input type="file" name="f_kk" class="form-control is-valid @error('f_kk') is-invalid @enderror" id="file-open"
-                                onchange="previewFile()">
-
-                                <div class="valid-feedback">
-                                    *Scan KK asli
-                                </div>
+                                    onchange="previewFile()">
                                 @error('f_kk')
-                                <div class="invalid-feedback">
+                                <div class="invalid-tooltip">
                                     {{$message}}
                                 </div>
                                 @enderror
+                                <div class="valid-feedback">
+                                    *Scan KK asli berupa file PDF [max:2mb]
+                                </div>
+                            </div>
+                            <div class="form-group w-75 position-relative">
+                                <br>
+                                <label for="" class="form-label">Foto 3x4</label>
+                                <input type="file" name="f_foto" class="form-control is-valid @error('f_foto') is-invalid @enderror"
+                                    id="customImage" aria-describedby="inputGroupFileAddon04" aria-label="Masukkan Gambar"
+                                    onchange="previewImage()">
+                                @error('f_foto')
+                                <div class="invalid-tooltip">
+                                    {{$message}}
+                                </div>
+                                @enderror
+                                <div class="valid-feedback">
+                                    *foto 3x4 [dalam format png/jpg]
+                                </div>
                             </div>
                             <div class="form-group w-75">
                                 <label class="form-label">Keterangan :</label>
                                 <select name="ket" id="ket" class="form-select">
                                     @if (Auth::user()->hasRole(['Admin','Ketua','Staf-Resepsionis']))    
-                                    <option value="b-v">Belum Verifikasi</option>
-                                    <option value="v">Terverifikasi (Belum Disurvei)</option>
-                                    <option value="s">Survey (Selesai)</option>
-                                    <option value="t">Tolak</option>
+                                    <option value="1">Belum Verifikasi</option>
+                                    <option value="2">Terverifikasi (Belum Disurvei)</option>
+                                    <option value="3">Survey (Selesai)</option>
+                                    <option value="4">Tolak</option>
                                     @endif
                                 </select>
                             </div>
@@ -176,19 +199,29 @@
         });
 
     function previewFile() {
-    const preview = document.querySelector('iframe');
-    const file = document.querySelector('input[type=file]').files[0];
-    const reader = new FileReader();
-    var filename = file.name;
-    
-    reader.addEventListener("load", function () {
-    // convert file to base64 string
-    preview.src = reader.result;
-    }, false);
-    
-    if (file) {
-    reader.readAsDataURL(file);
+        const preview = document.querySelector('iframe');
+        const file = document.querySelector('input[type=file]').files[0];
+        const reader = new FileReader();
+        var filename = file.name;
+        
+        reader.addEventListener("load", function () {
+        // convert file to base64 string
+        preview.src = reader.result;
+        }, false);
+        
+        if (file) {
+        reader.readAsDataURL(file);
+        }
     }
+    function previewImage() {
+        const image = document.querySelector('#customImage');
+        const imgPreview = document.querySelector('.img-preview');
+        imgPreview.style.display = 'block';
+        const oFReader = new FileReader();
+        oFReader.readAsDataURL(image.files[0]);
+            oFReader.onload = function(oFREvent){
+            imgPreview.src = oFREvent.target.result;
+            }
     }
 </script>
 @endsection

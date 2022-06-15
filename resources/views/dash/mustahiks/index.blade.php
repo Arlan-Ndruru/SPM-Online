@@ -11,8 +11,9 @@
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0 mx-4">
-                            
+                            @if (Auth::user()->hasRole(['Admin', 'Staf-Resepsionis', 'Ketua']))
                             <a href="{{ route('dashMustahikAdd') }}" class="m-3 btn btn-success"><i class="fa fa-plus"></i> Tambah</a>
+                            @endif
                             <form action="{{ route('dashMustahiks') }}">
                                 <div class="input-group  m-4 w-75">
                                     <span class="input-group-text">Advance Search :</span>
@@ -76,37 +77,37 @@
                                         </td>
                                         <td class="align-middle text-center text-sm">
                                             @if (Auth::user()->hasRole(['Admin', 'Ketua']))
-                                            @if($mustahik->ket == "b-v"){{-- Staf Mustahik --}}
+                                            @if($mustahik->ket == 1){{-- Staf Mustahik --}}
                                             <span class="badge bg-secondary">Belum Verifikasi</span>
-                                            @elseif($mustahik->ket == "v"){{-- Staf Mustahik --}}
+                                            @elseif($mustahik->ket == 2){{-- Staf Mustahik --}}
                                             <span class="badge bg-success">Telah Verifikasi</span>
-                                            @elseif($mustahik->ket == "s"){{-- Staf TU --}}
+                                            @elseif($mustahik->ket == 3){{-- Staf TU --}}
                                             <span class="badge bg-success">Telah Survey (Selesai)</span>
-                                            @elseif($mustahik->ket == "t"){{-- Staf TU --}}
+                                            @elseif($mustahik->ket == 4){{-- Staf TU --}}
                                             <span class="badge bg-danger">Di Tolak</span>
                                             @else
                                             <span class="badge bg-warning">Done</span>
                                             @endif
                                             @endif
                                             @if (Auth::user()->hasRole(['Staf-Resepsionis']))
-                                            @if($mustahik->ket == "b-v"){{-- Staf Mustahik --}}
+                                            @if($mustahik->ket == 1){{-- Staf Mustahik --}}
                                             <span class="badge bg-secondary">Belum Verifikasi</span>
-                                            @elseif($mustahik->ket == "v"){{-- Staf Mustahik --}}
+                                            @elseif($mustahik->ket == 2){{-- Staf Mustahik --}}
                                             <span class="badge bg-success">Telah Verifikasi</span>
-                                            @elseif($mustahik->ket == "s"){{-- Staf TU --}}
+                                            @elseif($mustahik->ket == 3){{-- Staf TU --}}
                                             <span class="badge bg-success">Telah Survey</span>
-                                            @elseif($mustahik->ket == "t"){{-- Staf TU --}}
+                                            @elseif($mustahik->ket == 4){{-- Staf TU --}}
                                             <span class="badge bg-danger">Di Tolak</span>
                                             @else
                                             <span class="badge bg-warning">Done</span>
                                             @endif
                                             @endif
                                             @if (Auth::user()->hasRole(['Staf-Distribusi']))
-                                            @if($mustahik->ket == "v"){{-- Staf Mustahik --}}
+                                            @if($mustahik->ket == 2){{-- Staf Mustahik --}}
                                             <span class="badge bg-dark">Belum Disurvei</span>
-                                            @elseif($mustahik->ket == "s"){{-- Staf TU --}}
+                                            @elseif($mustahik->ket == 3){{-- Staf TU --}}
                                             <span class="badge bg-success">Telah Survey (Done)</span>
-                                            @elseif($mustahik->ket == "t"){{-- Staf TU --}}
+                                            @elseif($mustahik->ket == 4){{-- Staf TU --}}
                                             <span class="badge bg-danger">Di Tolak</span>
                                             @else
                                             <span class="badge bg-warning">Data Rusak !</span>

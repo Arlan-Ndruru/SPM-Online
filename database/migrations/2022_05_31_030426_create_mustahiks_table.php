@@ -21,12 +21,13 @@ return new class extends Migration
             $table->date('tl');
             $table->string('t_lahir');
             $table->string('alamat');
-            $table->string('no_hpM');
-            $table->string('surat_pengantar')->nullable();
-            $table->string('f_kk')->nullable();
-            $table->string('f_ktp')->nullable();
+            $table->bigInteger('no_hpM');
+            $table->string('f_foto');
+            $table->string('surat_pengantar');
+            $table->string('f_kk');
+            $table->string('f_ktp');
             $table->foreignId('masjid');
-            $table->string('ket');
+            $table->tinyInteger('ket');
             $table->foreignId('created_by');
             $table->timestamps();
         });

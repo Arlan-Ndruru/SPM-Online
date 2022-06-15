@@ -34,25 +34,61 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         // dd($request);
-        $request->validate([
-            'unique_number' => ['required', 'unique:users'],
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', Rules\Password::defaults()],
-            'no_hp' => ['required']
-        ]);
+        $validatedData = $request->validate([
+            'unique_number' => 'required|unique:users|digits:16',
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            // 'password' => Hash::make($request->password),
+            'no_hp' => 'required',
+            'sr_upz' => 'required|mimes:pdf|max:2048',
 
-        $user = User::create([
-            'unique_number' => $request->unique_number,
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'no_hp' => $request->no_hp,
-            'status' => 0,
+            // 'foto' => 'image|file|max:2048',
         ]);
+        if ($request->file('sr_upz')) {
+            $validatedData['sr_upz'] = $request->file('sr_upz')->store('SR-UPZ/sr_upz');
+        }
+        
+        $validatedData['password'] = Hash::make($request->password);
+        $validatedData['status'] = 0;
 
+        // if ($request->file('foto')) {
+        //     $validatedData['foto'] = $request->file('foto')->store('user-images');
+        // }
+        // dd($validatedData);
+        
+        $user = User::create($validatedData);
+        // dd($user);
         $user->attachRole($request->role_id);
+        //
+            // $request->validate([
+            //     'unique_number' => ['required', 'unique:users', 'digits:16'],
+            //     'name' => ['required', 'string', 'max:255'],
+            //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            //     'password' => ['required', Rules\Password::defaults()],
+            //     'no_hp' => ['required'],
+                
+            // ]);
+            // $validatedData = $request->validate([
+            //     'sr_upz' => ['required', 'mimes:pdf', 'max:2048'],
+            // ]);
 
+            // if ($request->file('sr_upz')) {
+            //     $validatedData['sr_upz'] = $request->file('sr_upz')->store('SR-UPZ/sr_upz');
+            // }
+
+            // $user = User::create([
+            //     'unique_number' => $request->unique_number,
+            //     'name' => $request->name,
+            //     'email' => $request->email,
+            //     'password' => Hash::make($request->password),
+            //     'no_hp' => $request->no_hp,
+            //     'status' => 0,
+            // ],$validatedData);
+
+            // dd($user);
+
+            // $user->attachRole($request->role_id);
+        //
         if ($user->status === 0) {
             Auth::logout($user);
             return redirect('/login')->with('need', "Registration Success, Login Please!");

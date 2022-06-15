@@ -23,17 +23,17 @@ class MustahikSeeder extends Seeder
                 'tl' => '2002-12-12',
                 't_lahir' => 'Pekanbaru',
                 'alamat' => 'Jalan Sekutum',
-                'no_hpM' => '081371237612',
-                'surat_pengantar' => '',
-                'f_kk' => '',
-                'f_ktp' => '',
+                'no_hpM' => 6281371237612,
+                'surat_pengantar' => 'null',
+                'f_foto' => 'null',
+                'f_kk' => 'null',
+                'f_ktp' => 'null',
                 'masjid' => '1',
-                'ket' => 'b-v',
-                    // belum verifikasi
-                    // sudah verifikasi
-                    // belum survei
-                    // sudah survei
-                    // selesai
+                'ket' => 1,
+                    // belum verifikasi 1
+                    // sudah verifikasi 2
+                    // sudah survei 3
+                    // Tolak 4
                 'created_by' => '1',
             ]);
         //
@@ -45,16 +45,17 @@ class MustahikSeeder extends Seeder
                 'tl' => '2002-12-12',
                 't_lahir' => 'Pekanbaru',
                 'alamat' => 'Jalan Melati 2',
-                'no_hpM' => '0899123781871',
-                'surat_pengantar' => '',
-                'f_kk' => '',
-                'f_ktp' => '',
+                'no_hpM' => 62899123781871,
+                'surat_pengantar' => 'null',
+                'f_foto' => 'null',
+                'f_kk' => 'null',
+                'f_ktp' => 'null',
                 'masjid' => '1',
-                'ket' => 'v',
-                    // belum verifikasi   bv
-                    // sudah verifikasi   v
-                    // sudah survei       s
-                    // tolak              t
+                'ket' => 2,
+                    // belum verifikasi 1
+                    // sudah verifikasi 2
+                    // sudah survei 3
+                    // Tolak 4
                 'created_by' => '1',
             ]);
         //
@@ -66,17 +67,17 @@ class MustahikSeeder extends Seeder
                 'tl' => '2002-12-12',
                 't_lahir' => 'Pekanbaru',
                 'alamat' => 'Jalan Sempit',
-                'no_hpM' => '897256239479',
-                'surat_pengantar' => '',
-                'f_kk' => '',
-                'f_ktp' => '',
+                'no_hpM' => 6297256239479,
+                'surat_pengantar' => 'null',
+                'f_foto' => 'null',
+                'f_kk' => 'null',
+                'f_ktp' => 'null',
                 'masjid' => '1',
-                'ket' => 't',
-                    // belum verifikasi
-                    // sudah verifikasi
-                    // belum survei
-                    // sudah survei
-                    // selesai
+                'ket' => 3,
+                    // belum verifikasi 1
+                    // sudah verifikasi 2
+                    // sudah survei 3
+                    // Tolak 4
                 'created_by' => '1',
             ]);
         //
@@ -88,17 +89,17 @@ class MustahikSeeder extends Seeder
                 'tl' => '2002-12-12',
                 't_lahir' => 'Pekanbaru',
                 'alamat' => 'Jalan Mawar',
-                'no_hpM' => '766102391829123',
-                'surat_pengantar' => '',
-                'f_kk' => '',
-                'f_ktp' => '',
+                'no_hpM' => 6266102391829123,
+                'surat_pengantar' => 'null',
+                'f_foto' => 'null',
+                'f_kk' => 'null',
+                'f_ktp' => 'null',
                 'masjid' => '1',
-                'ket' => 's',
-                    // belum verifikasi
-                    // sudah verifikasi
-                    // belum survei
-                    // sudah survei
-                    // selesai
+                'ket' => 4,
+                    // belum verifikasi 1
+                    // sudah verifikasi 2
+                    // sudah survei 3
+                    // Tolak 4
                 'created_by' => '1',
             ]);
         //

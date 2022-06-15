@@ -2,7 +2,7 @@
 
 @section('content-main')
 <div class="container-fluid py-4">
-    <div class="card shadow-lg mx-4 card-profile-bottom">
+    <div class="card shadow-lg mx-4 ">
         <div class="card-body p-3">
             <div class="row gx-4">
                 <div class="col-auto">
@@ -16,9 +16,6 @@
                         <h5 class="mb-1">
                             {{ $district->name }}
                         </h5>
-                        <p class="mb-0 font-weight-bold text-sm">
-                            {{ $district->email }}
-                        </p>
                     </div>
                 </div>
                 {{-- <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
@@ -57,11 +54,11 @@
                 <div class="card">
                     <div class="card-header pb-0">
                         <div class="d-flex align-items-center">
-                            <p class="mb-0">Detail Profile</p>
+                            <p class="mb-0">Detail Data</p>
                         </div>
                     </div>
                     <div class="card-body">
-                        <p class="text-uppercase text-sm">Masjid Information</p>
+                        <p class="text-uppercase text-sm">Kecamatan Information</p>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">

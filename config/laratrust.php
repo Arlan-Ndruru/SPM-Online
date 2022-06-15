@@ -184,7 +184,9 @@ return [
              */
             'abort' => [
                 'code' => 403,
-                'message' => 'User does not have any of the necessary access rights.'
+                'message' => 'Pengguna Tidak Memiliki Akses Untuk Hal ini!.
+                How you do that 0_o!
+                '
             ],
 
             /**

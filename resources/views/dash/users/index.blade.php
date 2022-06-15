@@ -51,6 +51,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @if (Auth::user()->hasRole('Admin|Ketua'))
                                     @foreach ($usersAdmin as $user)
                                         
                                         <tr>
@@ -251,6 +252,7 @@
                                         </tr>
 
                                     @endforeach
+                                @endif
                                     @foreach ($usersCM as $user)
                                         
                                         <tr>

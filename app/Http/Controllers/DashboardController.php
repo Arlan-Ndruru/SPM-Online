@@ -22,10 +22,10 @@ class DashboardController extends Controller
         $params = [
                 'title' => "Administrator",
                 'cuser' => User::latest()->where('status', 1)->count(),
-                'cmustahik' => Mustahik::latest()->where('ket', 'v')
-                ->orWhere('ket', 'bv')
-                ->orWhere('ket', 's')
-                ->orWhere('ket', 't')->count(),
+                'cmustahik' => Mustahik::latest()->where('ket', 2)
+                ->orWhere('ket', 1)
+                ->orWhere('ket', 3)
+                ->orWhere('ket', 4)->count(),
                 'cstaf' => User::latest()->whereRoleis(['Staf-Resepsionis'])
                 ->orWhereRoleis(['Staf-Distribusi'])->count(),
 
@@ -36,9 +36,9 @@ class DashboardController extends Controller
             $params = [
                 'title' => "Ketua Baznas",
                 'cuser' => User::latest()->where('status', 1)->count(),
-                'cmustahik' => Mustahik::latest()->where('ket', 'v')
-                ->orWhere('ket', 's')
-                ->orWhere('ket', 't')->count(),
+                'cmustahik' => Mustahik::latest()->where('ket', 2)
+                ->orWhere('ket', 3)
+                ->orWhere('ket', 4)->count(),
                 'cmasjid' => Mosque::latest()->count(),
                 'cstaf' => User::latest()->whereRoleis(['Staf-Resepsionis'])
                 ->orWhereRoleis(['Staf-Distribusi'])->count(),
@@ -47,9 +47,9 @@ class DashboardController extends Controller
         if (Auth::user()->hasRole(['Staf-Distribusi'])) {
             $params = [
                 'title' => "Staf Distribusi",
-                'cmustahik' => Mustahik::latest()->where('ket', 'v')
-                ->orWhere('ket', 's')
-                ->orWhere('ket', 't')->count(),
+                'cmustahik' => Mustahik::latest()->where('ket', 2)
+                ->orWhere('ket', 3)
+                ->orWhere('ket', 4)->count(),
             ];
         }
         if (Auth::user()->hasRole(['Staf-Resepsionis'])) {
@@ -57,10 +57,10 @@ class DashboardController extends Controller
                 'title' => "Staf Resepsionis",
                 'cmasjid' => Mosque::latest()->count(),
                 'cuser' => User::latest()->where('status', 1)->count(),
-                'cmustahik' => Mustahik::latest()->where('ket', 'b-v')
-                ->orWhere('ket', 'v')
-                ->orWhere('ket', 's')
-                ->orWhere('ket', 't')->count(),
+                'cmustahik' => Mustahik::latest()->where('ket', 1)
+                ->orWhere('ket', 2)
+                ->orWhere('ket', 3)
+                ->orWhere('ket', 4)->count(),
             ];
         }
         if (Auth::user()->hasRole(['Calon-Mustahik'])) {
@@ -104,11 +104,12 @@ class DashboardController extends Controller
             'tl' => 'required',
             'masjid' => 'required',
             'no_hpM' => 'required',
-            // 'surat_pengantar' => 'required',
-            // 'f_ktp' => 'required',
-            // 'f_kk' => 'required',
+            'surat_pengantar' => 'required|mimes:pdf|max:2048',
+            'f_ktp' => 'required|mimes:pdf|max:2048',
+            'f_kk' => 'required|mimes:pdf|max:2048',
+            'f_foto' => 'required|image|mimes:png,jpg,jpeg|file|max:2048',
         ]);
-        $validatedData['ket'] = 'b-v';
+        $validatedData['ket'] = 1;
         $validatedData['unique_number'] = Auth::user()->unique_number;
         $validatedData['created_by'] = Auth::user()->id;
 
@@ -119,6 +120,10 @@ class DashboardController extends Controller
             $validatedData['surat_pengantar'] = $request->file('surat_pengantar')->store('bymustahik/surat_pengantar');
         }
 
+        if ($request->file('f_foto')) {
+            $validatedData['f_foto'] = $request->file('f_foto')->store('bymustahik/Files_FOTO');
+        }
+
         if ($request->file('f_ktp')) {
             $validatedData['f_ktp'] = $request->file('f_ktp')->store('bymustahik/Files_KTP');
         }
@@ -126,6 +131,7 @@ class DashboardController extends Controller
         if ($request->file('f_kk')) {
             $validatedData['f_kk'] = $request->file('f_kk')->store('bymustahik/Files_KK');
         }
+        // dd($validatedData);
         
         Mustahik::create($validatedData);
         
@@ -174,7 +180,7 @@ class DashboardController extends Controller
      */
     public function destroy(Mustahik $mustahik)
     {
-        if ($mustahik->ket == 't') {
+        if ($mustahik->ket == 4) {
             Mustahik::destroy($mustahik->id);
             return redirect('dashboard/')->with('success', "Data Mustahik, $mustahik->name has successfully been deleted.");
         }
