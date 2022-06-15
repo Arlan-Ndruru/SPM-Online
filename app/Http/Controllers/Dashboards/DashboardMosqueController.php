@@ -110,7 +110,7 @@ class DashboardMosqueController extends Controller
     {
         // dd($request);
         $rules = [
-            'name' => 'required',
+            // 'name' => 'required|unique:mosques',
             // 'slug' => 'required',
             'name_ketua' => 'required',
             'jtMasjid' => 'required',
@@ -122,6 +122,9 @@ class DashboardMosqueController extends Controller
             'ket' => 'required',
         ];
 
+        if ($request->name != $mosque->name) {
+            $rules['name'] = 'required|unique:mosques';
+        }
         if ($request->slug != $mosque->slug) {
             $rules['slug'] = 'required|unique:mosques';
         }

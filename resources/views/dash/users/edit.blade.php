@@ -84,6 +84,8 @@
                                 <div class="form-group w-75">
                                     <label class="form-label">Phone Number (+62)</label>
                                     <input type="number" name="no_hp" class="form-control @error('no_hp') is-invalid @enderror" required
+                                    maxlength="15"
+                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                         value="{{old('no_hp', $user->no_hp)}}">
                                     @error('no_hp')
                                     <div class="invalid-feedback">

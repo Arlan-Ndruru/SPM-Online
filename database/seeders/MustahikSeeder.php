@@ -39,7 +39,7 @@ class MustahikSeeder extends Seeder
         //
         // Seeder Mustahik
             Mustahik::create([
-                'unique_number' => '782342348676776',
+                'unique_number' => '1782342348676776',
                 'name' => 'Togi Pratama',
                 'slug' => 'togi-pratama',
                 'tl' => '2002-12-12',
@@ -61,7 +61,7 @@ class MustahikSeeder extends Seeder
         //
         // Seeder Mustahik
             Mustahik::create([
-                'unique_number' => '24324234234',
+                'unique_number' => '1243242342343125',
                 'name' => 'Yeha Liman',
                 'slug' => 'Yeha-Liman',
                 'tl' => '2002-12-12',
@@ -83,13 +83,13 @@ class MustahikSeeder extends Seeder
         //
         // Seeder Mustahik
             Mustahik::create([
-                'unique_number' => '12312312312312311',
+                'unique_number' => '1231231231231231',
                 'name' => 'Jajar Setiawan',
                 'slug' => 'jajar-setiawan',
                 'tl' => '2002-12-12',
                 't_lahir' => 'Pekanbaru',
                 'alamat' => 'Jalan Mawar',
-                'no_hpM' => 6266102391829123,
+                'no_hpM' => 628102391829123,
                 'surat_pengantar' => 'null',
                 'f_foto' => 'null',
                 'f_kk' => 'null',

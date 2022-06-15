@@ -29,11 +29,13 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 
-
+// todo :: Route Managed mustahik oleh mustahik !
 Route::group(['middleware' => ['auth', 'role:Calon-Mustahik']], function () {
     Route::get('/dashboard/bymustahiks/checkSlug', [DashboardController::class, 'checkSlug']);
     Route::post('/dashboard/bymustahiks/', [DashboardController::class, 'store'])->name('storebyMustahiks');
     Route::delete('/dashboard/bymustahiks/{mustahik:slug}', [DashboardController::class, 'destroy'])->name('dashdeletebyMustahik');
+    Route::put('/dashboard/bymustahiks/{mustahik:slug}', [DashboardController::class, 'update'])->name('dashupdatebyMustahik');
+    Route::get('/dashboard/bymustahiks/{mustahik:slug}/edit', [DashboardController::class, 'edit'])->name('dasheditbyMustahik');
 });
 
 // todo :: Route Managed Users !

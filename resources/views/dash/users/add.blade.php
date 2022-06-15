@@ -16,6 +16,9 @@
                                 @csrf
                                 <div class="form-group w-75">
                                     <label class="form-label">Nomor Identitas (NIK) : </label>
+                                    <div class="text-dark text-sm ">
+                                        <i>Note : Berdasarkan Data KTP, Harus 16 digit</i>
+                                    </div>
                                     <input type="number" maxlength="16"
                                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                      name="unique_number" class="form-control @error('unique_number') is-invalid @enderror" required
@@ -27,7 +30,10 @@
                                     @enderror
                                 </div>
                                 <div class="form-group w-75">
-                                    <label class="form-label">Nama :</label>
+                                    <label class="form-label">Nama Lengkap :</label>
+                                    <div class="text-dark text-sm ">
+                                        <i>Note : Berdasarkan Data KTP</i>
+                                    </div>
                                     <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" required
                                         value="{{old('name')}}">
                                     @error('name')
@@ -38,6 +44,9 @@
                                 </div>
                                 <div class="form-group w-75">
                                     <label class="form-label">Email</label>
+                                    <div class="text-dark text-sm ">
+                                        <i>Saran : NIK@gmail.com</i>
+                                    </div>
                                     <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" required
                                         value="{{old('email')}}">
                                     @error('email')
@@ -78,7 +87,9 @@
                                 <div class="form-group w-75">
                                     <label class="form-label">Phone Number (+62)</label>
                                     <input type="number" name="no_hp" class="form-control @error('no_hp') is-invalid @enderror" required
-                                        value="62{{old('no_hp')}}">
+                                    maxlength="15"
+                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                        value="{{old('no_hp', 62)}}">
                                     @error('no_hp')
                                     <div class="invalid-feedback">
                                         {{$message}}

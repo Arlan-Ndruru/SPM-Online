@@ -204,6 +204,11 @@
                                                 </a>
                                             </td>
                                             <td class="align-middle">
+                                                <a href="{{ route('dasheditbyMustahik', $mustahik->slug) }}"
+                                                    class="btn btn-outline-dark btn-lg border-0 p-2  font-weight-bold btn-tooltip" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="Edit Mustahik" data-container="body" data-animation="true">
+                                                    <span class="fa fa-edit"></span> Edit
+                                                </a>
                                                 {{-- <button type="button"
                                                     class="btn btn-outline-warning btn-lg border-0 p-2  font-weight-bold text-xs btn-tooltip"
                                                     data-bs-placement="top" title="Detail mustahik" data-container="body" data-animation="true"
@@ -229,35 +234,35 @@
                     </div>
                 </div>
                 <div class="col-12">
+                    @if (session()->has('error'))
+                    <div class="col-md-5 d-inline alert alert-danger alert-dismissible fade show" role="alert">
+                        <span class="alert-icon align-middle">
+                            <div class="spinner-grow text-light" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </span>
+                        <span class="alert-text text-white"><strong>{{session('error')}}</strong> check it out!</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
+                    @if (session()->has('success'))
+                    <div class="col-md-5 d-inline alert alert-success alert-dismissible fade show" role="alert">
+                        <span class="alert-icon align-middle">
+                            <div class="spinner-grow text-light" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </span>
+                        <span class="alert-text text-white"><strong>{{session('success')}}</strong> check it out!</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @endif
                     <div class="card mb-4">
                         <div class="row">
                         <div class="col-6">
-                            @if (session()->has('error'))
-                            <div class="col-md-5 d-inline alert alert-danger alert-dismissible fade show" role="alert">
-                                <span class="alert-icon align-middle">
-                                    <div class="spinner-grow text-light" role="status">
-                                        <span class="visually-hidden">Loading...</span>
-                                    </div>
-                                </span>
-                                <span class="alert-text text-white"><strong>{{session('error')}}</strong> check it out!</span>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            @endif
-                            @if (session()->has('success'))
-                            <div class="col-md-5 d-inline alert alert-success alert-dismissible fade show" role="alert">
-                                <span class="alert-icon align-middle">
-                                    <div class="spinner-grow text-light" role="status">
-                                        <span class="visually-hidden">Loading...</span>
-                                    </div>
-                                </span>
-                                <span class="alert-text text-white"><strong>{{session('success')}}</strong> check it out!</span>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            @endif
                             <div class="card-header pb-0">
                                 <h6>Form Pendaftaran Calon Mustahik</h6>
                             </div>
@@ -348,7 +353,9 @@
                                     <div class="form-group w-75">
                                         <label class="form-label">Phone Number (+62)</label>
                                         <input type="number" name="no_hpM" class="form-control is-valid @error('no_hpM') is-invalid @enderror"
-                                            required value="{{old('no_hpM')}}">
+                                        maxlength="15"
+                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                            required value="{{old('no_hpM', 62)}}">
                                             <div class="valid-feedback">
                                                 Contoh : 628989822321
                                             </div>

@@ -27,8 +27,8 @@
                                 @enderror
                             </div>
                             <div class="form-group w-75">
-                                <label class="form-label">Slug : </label>
-                                <input type="text" id="slug" name="slug" class="form-control @error('slug') is-invalid @enderror"
+                                {{-- <label class="form-label">Slug : </label> --}}
+                                <input type="text" hidden id="slug" name="slug" class="form-control @error('slug') is-invalid @enderror"
                                     required value="{{old('slug', $district->slug)}}">
                                 @error('slug')
                                 <div class="invalid-feedback">

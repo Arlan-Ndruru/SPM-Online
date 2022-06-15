@@ -161,7 +161,7 @@ class DashboardUserController extends Controller
             // 'foto' => 'image|file|max:2048',
         ];
         if ($request->unique_number != $user->unique_number) {
-            $rules['unique_number'] = 'required|unique:users';
+            $rules['unique_number'] = 'required|unique:users|digits:16';
         }
         if ($request->email != $user->email) {
             $rules['email'] = 'required|unique:users';

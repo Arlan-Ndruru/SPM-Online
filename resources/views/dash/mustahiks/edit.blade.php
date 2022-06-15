@@ -18,7 +18,12 @@
                             @csrf
                             <div class="form-group w-75">
                                 <label class="form-label">NIK : </label>
+                                <div class="text-dark text-sm ">
+                                    <i>Note : Berdasarkan Data KTP, Harus 16 digit</i>
+                                </div>
                                 <input type="text" id="unique_number" name="unique_number" class="form-control @error('unique_number') is-invalid @enderror" required
+                                maxlength="16"
+                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                     value="{{old('unique_number', $mustahik->unique_number)}}">
                                 @error('unique_number')
                                 <div class="invalid-feedback">
@@ -37,8 +42,8 @@
                                 @enderror
                             </div>
                             <div class="form-group w-75">
-                                <label class="form-label">Slug : </label>
-                                <input type="text" id="slug" name="slug" class="form-control @error('slug') is-invalid @enderror"
+                                {{-- <label class="form-label">Slug : </label> --}}
+                                <input type="text" id="slug" hidden name="slug" class="form-control @error('slug') is-invalid @enderror"
                                     required value="{{old('slug', $mustahik->slug)}}">
                                 @error('slug')
                                 <div class="invalid-feedback">
@@ -91,6 +96,8 @@
                                 <label class="form-label">Phone Number (+62)</label>
                                 <input type="number" name="no_hpM"
                                     class="form-control @error('no_hpM') is-invalid @enderror" required
+                                    maxlength="15"
+                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                     value="{{old('no_hpM', $mustahik->no_hpM)}}">
                                 @error('no_hpM')
                                 <div class="invalid-feedback">

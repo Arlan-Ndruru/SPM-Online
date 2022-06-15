@@ -26,8 +26,8 @@
                                 @enderror
                             </div>
                             <div class="form-group w-75">
-                                <label class="form-label">Slug : </label>
-                                <input type="text" id="slug" name="slug" class="form-control @error('slug') is-invalid @enderror"
+                                {{-- <label class="form-label">Slug : </label> --}}
+                                <input type="text" hidden id="slug" name="slug" class="form-control @error('slug') is-invalid @enderror"
                                     required value="{{old('slug')}}">
                                 @error('slug')
                                 <div class="invalid-feedback">
@@ -68,7 +68,7 @@
                                 @enderror --}}
                             </div>
                             <div class="form-group w-75">
-                                <label class="form-label">Alamat Lengkap : </label>
+                                <label class="form-label">Alamat Lengkap Masjid : </label>
                                 <input type="text" name="alamat"
                                     class="form-control @error('alamat') is-invalid @enderror" required
                                     value="{{old('alamat')}}">
@@ -79,7 +79,7 @@
                                 @enderror
                             </div>
                             <div class="form-group w-75">
-                                <label class="form-label">RT : </label>
+                                <label class="form-label">RT (Masjid): </label>
                                 <input type="number" name="rtMasjid"
                                     class="form-control @error('rtMasjid') is-invalid @enderror" required
                                     value="{{old('rtMasjid')}}">
@@ -90,7 +90,7 @@
                                 @enderror
                             </div>
                             <div class="form-group w-75">
-                                <label class="form-label">RW : </label>
+                                <label class="form-label">RW (Masjid): </label>
                                 <input type="number" name="rwMasjid"
                                     class="form-control @error('rwMasjid') is-invalid @enderror" required
                                     value="{{old('rwMasjid')}}">
@@ -101,7 +101,7 @@
                                 @enderror
                             </div>
                             <div class="form-group w-75">
-                                <label class="form-label">Kecamatan : </label>
+                                <label class="form-label">Kecamatan (Masjid) : </label>
                                 <input type="text" name="kecm"
                                     class="form-control @error('kecm') is-invalid @enderror" required
                                     value="{{old('kecm')}}">
@@ -115,7 +115,7 @@
                                 <label class="form-label">Phone Number (+62)</label>
                                 <input type="number" name="no_hpMasjid"
                                     class="form-control @error('no_hpMasjid') is-invalid @enderror" required
-                                    value="{{old('no_hpMasjid')}}">
+                                    value="{{old('no_hpMasjid', 62)}}">
                                 @error('no_hpMasjid')
                                 <div class="invalid-feedback">
                                     {{$message}}

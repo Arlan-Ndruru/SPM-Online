@@ -60,7 +60,7 @@ class DashboardMustahikController extends Controller
     {
         // dd($request);
         $validatedData = $request->validate([
-            'unique_number' => 'required',
+            'unique_number' => 'required|unique:mustahiks|digits:16',
             'name' => 'required',
             'slug' => 'required|unique:mustahiks',
             'alamat' => 'required',
@@ -142,7 +142,7 @@ class DashboardMustahikController extends Controller
     public function update(Request $request, Mustahik $mustahik)
     {
         $rules = [
-            'unique_number' => 'required',
+            // 'unique_number' => 'required|unique:mustahiks|digits:16',
             'name' => 'required',
             // 'slug' => 'required|unique:mustahiks',
             'alamat' => 'required',
@@ -153,8 +153,11 @@ class DashboardMustahikController extends Controller
             // 'surat_pengantar' => 'required',
             'ket' => 'required',
         ];
+        if ($request->unique_number != $mustahik->unique_number) {
+            $rules['unique_number'] = 'required|unique:mustahiks|digits:16';
+        }
         if ($request->slug != $mustahik->slug) {
-            $rules['slug'] = 'required|unique:mustahiks';
+            $rules['slug'] = 'required|unique:mustahiks|digits:16';
         }
         $validatedData = $request->validate($rules);
         // dd($validatedData);

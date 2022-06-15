@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Arlan',
                 'email' => '11950111676@students.uin-suska.ac.id',
                 'password' => bcrypt('123123123'),
-                'no_hp' => '081371469331',
+                'no_hp' => '6281371469331',
                 'status' => 1,
             ]);
             $role = 1;
@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'H. Endar Muda, S.H., M.H.',
                 'email' => 'hj.endarmuda@gmail.com',
                 'password' => bcrypt('123123123'),
-                'no_hp' => '081537409778',
+                'no_hp' => '6281537409778',
                 'status' => 1,
             ]);
             $role = 2;
@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
         //
         //Seeder Users
             $user = User::create([
-                'unique_number' => '823476423487',
+                'unique_number' => '1482347642348765',
                 'name' => 'Dika',
                 'email' => 'dika@gmail.com',
                 'password' => bcrypt('123123123'),
@@ -65,7 +65,7 @@ class DatabaseSeeder extends Seeder
         //
         //Seeder Users
             $user = User::create([
-                'unique_number' => '84734578876',
+                'unique_number' => '1847345788762137',
                 'name' => 'Azmi',
                 'email' => 'azmi@gmail.com',
                 'password' => bcrypt('123123123'),
@@ -77,7 +77,7 @@ class DatabaseSeeder extends Seeder
         //
         //Seeder Users
             $user = User::create([
-                'unique_number' => '23948729',
+                'unique_number' => '1762239487296792',
                 'name' => 'Bu Yulfiazartu',
                 'email' => 'yulfiazartu@gmail.com',
                 'password' => bcrypt('123123123'),

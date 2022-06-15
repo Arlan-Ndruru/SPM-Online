@@ -8,6 +8,7 @@ use App\Models\User;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
@@ -155,9 +156,14 @@ class DashboardController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Mustahik $mustahik)
     {
-        //
+        $params = [
+            'title' => 'Ubah data',
+            'mustahik' => $mustahik,
+            'mosque' => Mosque::get(),
+        ];
+        return view('dash.mustahiks.update')->with($params);
     }
 
     /**
@@ -167,9 +173,60 @@ class DashboardController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Mustahik $mustahik)
     {
-        //
+        // dd($request);
+        $rules = [
+            // 'unique_number' => 'required|unique:mustahiks|digits:16',
+            'name' => 'required',
+            // 'slug' => 'required|unique:mustahiks',
+            'alamat' => 'required',
+            't_lahir' => 'required',
+            'tl' => 'required',
+            'masjid' => 'required',
+            'no_hpM' => 'required',
+            // 'surat_pengantar' => 'required',
+            
+        ];
+        if ($request->unique_number != $mustahik->unique_number) {
+            $rules['unique_number'] = 'required|unique:mustahiks|digits:16';
+        }
+        if ($request->slug != $mustahik->slug) {
+            $rules['slug'] = 'required|unique:mustahiks|digits:16';
+        }
+        $validatedData = $request->validate($rules);
+        $validatedData['ket'] = 1;
+        // dd($validatedData);
+        if ($request->file('surat_pengantar')) {
+            if ($request->surat_pengantarOld) {
+                Storage::delete($request->surat_pengantarOld);
+            }
+            $validatedData['surat_pengantar'] = $request->file('surat_pengantar')->store('bysistem/surat_pengantar');
+        }
+
+        if ($request->file('f_foto')) {
+            if ($request->f_fotoOld) {
+                Storage::delete($request->f_fotoOld);
+            }
+            $validatedData['f_foto'] = $request->file('f_foto')->store('bysistem/Files_FOTO');
+        }
+
+        if ($request->file('f_ktp')) {
+            if ($request->f_ktpOld) {
+                Storage::delete($request->f_ktpOld);
+            }
+            $validatedData['f_ktp'] = $request->file('f_ktp')->store('bysistem/Files_ktp');
+        }
+        if ($request->file('f_kk')) {
+            if ($request->f_kkOld) {
+                Storage::delete($request->f_kkOld);
+            }
+            $validatedData['f_kk'] = $request->file('f_kk')->store('bysistem/Files_kk');
+        }
+
+        Mustahik::where('id', $mustahik->id)
+            ->update($validatedData);
+        return redirect('dashboard')->with('success', "Data Mustahik berhasil Edited Successfully !");
     }
 
     /**
