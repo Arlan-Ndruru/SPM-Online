@@ -21,3 +21,6 @@ yarn-error.log
 /database/database.sqlite-journal 
 /coverage  
 /docker  
+/database/seeders
+/database/factories
+/database/migrations
