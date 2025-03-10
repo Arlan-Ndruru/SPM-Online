@@ -22,6 +22,15 @@ SPM-Online adalah sebuah sistem berbasis web yang dibangun menggunakan framework
 - **Laratrust:** Sebagai package untuk mengatur role dan permission dalam multi-authentication.
 - **Breeze:** Sebagai package untuk autentikasi sederhana di Laravel.
 
+##Tampilan Sistem
+
+-- **Dashboard**
+![Dasboard](public/Screenshot%2025-03-10%114413.png)
+-- **Halaman Register**
+![Register](public/Screenshot%2025-03-10%114430.png)
+-- **Data Mustahik**
+![Data Mustahik](public/Screenshot%2025-03-10%114605.png)
+
 ## Instalasi dan Konfigurasi
 1. Clone repository ini:
    ```bash
