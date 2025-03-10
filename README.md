@@ -25,11 +25,11 @@ SPM-Online adalah sebuah sistem berbasis web yang dibangun menggunakan framework
 ##Tampilan Sistem
 
 -- **Dashboard**
-![Dasboard](public/Screenshot 2025-03-10 114413.png)
+![Dasboard](./public/Screenshot%2025-03-10%114413.png)
 -- **Halaman Register**
-![Register](public/Screenshot 2025-03-10 114430.png)
+![Register](./public/Screenshot%2025-03-10%114430.png)
 -- **Data Mustahik**
-![Data Mustahik](public/Screenshot 2025-03-10 114605.png)
+![Data Mustahik](./public/Screenshot%2025-03-10%114605.png)
 
 ## Instalasi dan Konfigurasi
 1. Clone repository ini:
